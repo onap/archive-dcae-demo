@@ -1,0 +1,67 @@
+{
+  "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.IteratorTableTemplate",
+  "treePath": "/",
+  "tablePath": "/reports/logging/count",
+  "columns": {
+    "path": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "$path"
+    },
+    "class": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "$class"
+    },
+    "Logmessage (last hour)": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateMetricColumn",
+      "path": "/logMessageStats/ALL/count",
+      "option": {"$ref": "/configuration/metricOptions/hourlyCount"}
+    },
+    "SEV1 Logmessage (last hour)": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateMetricColumn",
+      "path": "/logMessageStats/SEV1/count",
+      "option": {"$ref": "/configuration/metricOptions/hourlyCount"}
+    },
+    "SEV2 Logmessage (last hour)": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateMetricColumn",
+      "path": "/logMessageStats/SEV2/count",
+      "option": {"$ref": "/configuration/metricOptions/hourlyCount"}
+    },
+    "Logmessage (last day)": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateMetricColumn",
+      "path": "/logMessageStats/ALL/count",
+      "option": {"$ref": "/configuration/metricOptions/dailyCount"}
+    },
+    "SEV1 Logmessage (last day)": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateMetricColumn",
+      "path": "/logMessageStats/SEV1/count",
+      "option": {"$ref": "/configuration/metricOptions/dailyCount"}
+    },
+    "SEV2 Logmessage (last day)": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateMetricColumn",
+      "path": "/logMessageStats/SEV2/count",
+      "option": {"$ref": "/configuration/metricOptions/dailyCount"}
+    }
+  },
+  "iterator": {
+    "$class": "org.openecomp.ncomp.core.function.IteratorUsingFunction",
+    "paths": ["/"],
+    "recursive": "true",
+    "filter": {
+      "$class": "org.openecomp.ncomp.core.function.RuleFunction",
+      "rules": [
+        {
+          "matches": [{
+            "$class": "org.openecomp.ncomp.core.function.FunctionMatchInstanceOf",
+            "ePackage": "org.openecomp.ncomp.sirius.manager.tableTemplate.ModelPackage",
+            "eName": "LogMessageContainer"
+          }],
+          "action": {"value": "true"}
+        },
+        {
+          "matches": [],
+          "action": {"value": "false"}
+        }
+      ]
+    }
+  }
+}

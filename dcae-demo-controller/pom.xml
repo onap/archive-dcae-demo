@@ -1,0 +1,231 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.openecomp.dcae.demo</groupId>
+	<artifactId>dcae-demo-controller</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	
+	<pluginRepositories>
+		<!-- Black Duck plugin dependencies -->
+		<pluginRepository>
+			<id>JCenter</id>
+			<name>JCenter Repository</name>
+			<url>http://jcenter.bintray.com</url>
+		</pluginRepository>
+
+		<pluginRepository>
+			<id>Restlet</id>
+			<name>Restlet Repository</name>
+			<url>http://maven.restlet.com</url>
+		</pluginRepository>
+	</pluginRepositories>
+<build>
+		<plugins>
+		<!-- blackduck maven plugin -->
+			<plugin>
+				<groupId>com.blackducksoftware.integration</groupId>
+				<artifactId>hub-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<inherited>false</inherited>
+				<configuration>
+					<hubProjectName>${project.name}</hubProjectName>
+					<outputDirectory>${project.basedir}</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>create-bdio-file</id>
+						<phase>package</phase>
+						<goals>
+							<goal>createHubOutput</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+       <!-- site maven plugin -->
+       <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-site-plugin</artifactId>
+           <version>3.6</version>
+           <dependencies>
+             <dependency>
+               <groupId>org.apache.maven.wagon</groupId>
+               <artifactId>wagon-webdav-jackrabbit</artifactId>
+               <version>2.10</version>
+             </dependency>
+           </dependencies>
+       </plugin>
+    
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>zipfile</id>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<phase>package</phase>
+						<configuration>
+							<attach>false</attach>
+							<finalName>${project.artifactId}-${project.version}</finalName>
+							<descriptors>
+								<descriptor>src/assembly/assemble_zip.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.8</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<phase>prepare-package</phase>
+						<configuration>
+							<transitive>false</transitive>
+							<outputDirectory>${project.build.directory}/assembly/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<useRepositoryLayout>false</useRepositoryLayout>
+							<addParentPoms>false</addParentPoms>
+							<copyPom>false</copyPom>
+							<excludeGroupIds>org.opendaylight,com.brocade.odl,ch.qos.logback,org.bouncycastle</excludeGroupIds>
+							<includeScope>runtime</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.2</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.8.1</version>
+				<configuration>
+					<tag>${project.artifactId}-${project.version}</tag>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.6</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.wagon</groupId>
+						<artifactId>wagon-webdav-jackrabbit</artifactId>
+						<version>2.10</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+
+	
+		<distributionManagement>
+			<repository>
+				<id>osecomp-nexus-releases</id>
+				<name>OSECOMP Release Repository</name>
+				<url>${openecomp.nexus.releases}</url>
+			</repository>
+			<snapshotRepository>
+				<id>osecomp-nexus-snapshots</id>
+				<name>OSECOMP Snapshot Repository</name>
+				<url>${openecomp.nexus.snapshots}</url>
+			</snapshotRepository>
+			<site>
+				<id>dcae-javadoc</id>
+				<url>${site.urlroot}/${project.artifactId}/${project.version}/</url>
+			</site>
+		</distributionManagement>
+	
+   <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                    <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+                    <docletArtifact>
+                        <groupId>org.umlgraph</groupId>
+                        <artifactId>umlgraph</artifactId>
+                        <version>5.6</version>
+                    </docletArtifact>
+                    <additionalparam>-views</additionalparam>
+                    <useStandardDocletOptions>true</useStandardDocletOptions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.openecomp.dcae.controller</groupId>
+			<artifactId>dcae-controller-platform-server</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+			<classifier>runtime</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.openecomp.dcae.controller</groupId>
+			<artifactId>dcae-controller-service-storage-postgres-model</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.openecomp.dcae.controller</groupId>
+			<artifactId>dcae-controller-service-standardeventcollector-manager</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.openecomp.dcae.controller</groupId>
+			<artifactId>dcae-controller-service-common-vm-manager</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.openecomp.dcae.controller</groupId>
+			<artifactId>dcae-controller-service-common-docker-manager</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.openecomp.dcae.controller</groupId>
+			<artifactId>dcae-controller-service-dmaap-drsub-manager</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.openecomp.dcae.controller</groupId>
+			<artifactId>dcae-controller-operation-utils</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.openecomp.dcae.controller.analytics</groupId>
+			<artifactId>dcae-analytics-cdap-common-model</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,192 @@
+description: VMs that runs Docker Host for Collectors
+short-name: coll
+number-vms-per-location: 1
+application-ids:
+- dcae
+admin-id: ubuntu
+
+lifecycle-management:
+  use-dcae-manager: yes
+  
+installation-steps:
+
+- step: shell
+  command: cp /tmp/ecomp-nexus.crt /usr/local/share/ca-certificates/ ; update-ca-certificates
+  application-id: root
+
+- step: shell
+  command: echo 162.242.254.138 ecomp-nexus >> /etc/hosts
+  application-id: root
+
+- step: shell
+  command: |
+    case \\\\\$(hostname -a) in
+      *openecomp.org*)
+        sed -i /`hostname`/d /etc/hosts
+        cat /tmp/vm-*-hosts >> /etc/hosts
+      ;;
+    esac
+    apt-get update ; apt-get install -y maven openjdk-7-jdk unzip python-pip
+    pip install libyaml
+  application-id: root
+  
+- step: shell
+  command: |
+    (cd /opt/app ; curl -Lo apache-groovy-binary-2.4.6.zip https://dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.6.zip )
+    (cd /opt/app ; unzip apache-groovy-binary-2.4.6.zip )
+    mkdir -p /opt/app/java/jdk
+    ln -s /usr /opt/app/java/jdk/jdk170
+    mkdir -p /opt/app/groovy
+    ln -s /opt/app/groovy-2.4.6 /opt/app/groovy/246
+  application-id: root
+
+#- step: maven-artifact
+#  group-id: org.openecomp.dcae.controller
+#  artifact-id: dcae-controller-core-utils
+#  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+#  type: zip
+#  assembly-id: runtime
+#  application-id: dcae
+  
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/zip-snapshots/dcae-controller-core-utils-${dcae.env('open-ecomp-demo.versions.controller')}-runtime.zip
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  type: zip
+  artifact-id: dcae-controller-core-utils
+  application-id: dcae
+
+- step: shell
+  command: |
+    /opt/app/dcae-controller-core-utils/bin/fs-init.py
+      
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-docker-host-manager
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: zip
+  assembly-id: runtime
+  application-id: dcae
+
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-docker-model
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: jar
+  application-id: dcae
+  
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-docker-adaptor
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: jar
+  application-id: dcae
+  
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-standardeventcollector-model
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: jar
+  application-id: dcae
+  
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-standardeventcollector-manager
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: jar
+  application-id: dcae
+
+- step: shell
+  command: |
+    /opt/app/dcae-controller-core-utils/bin/install-docker.sh
+    adduser dcae docker
+    docker login -u ${dcae.env('open-ecomp-demo.maven.user')} -p ${dcae.env('open-ecomp-demo.maven.password')} ${dcae.env('open-ecomp-demo.docker.registry')} 
+    docker pull ${dcae.env('open-ecomp-demo.docker.registry')}/dcae-controller-common-event:${dcae.env('open-ecomp-demo.versions.collector')}
+    docker pull ${dcae.env('open-ecomp-demo.docker.registry')}/dcae_dmaapbc:${dcae.env('open-ecomp-demo.versions.databus-controller')}
+    sudo su dcae -c "/opt/app/dcae-controller-service-docker-host-manager/bin/manager.sh config"
+    sudo su dcae -c "/opt/app/dcae-controller-service-docker-host-manager/bin/manager.sh restart"
+    mkdir -p /var/config/DCAE
+    mkdir -p /var/log/DCAE
+    chown dcae:dcae /var/config/DCAE /var/log/DCAE
+    
+- step: shell
+  command: |
+    echo nameserver 10.0.0.1 >>  /etc/resolv.conf
+    echo "prepend domain-name-servers 10.0.0.1;" >> /etc/dhcp/dhclient.conf
+    echo nameserver 10.0.0.1 >> /etc/resolvconf/resolv.conf.d/head
+    
+- step: shell
+  command: |
+    mkdir /opt/docker
+    curl -L https://github.com/docker/compose/releases/download/1.9.0/docker-compose-`uname -s`-`uname -m` > /opt/docker/docker-compose
+    chmod +x /opt/docker/docker-compose
+    /opt/app/dcae-controller-core-utils/bin/dmaap_mr_prep.sh ${dcae.env('open-ecomp-demo.git.mr-repo')}
+      
+controller-instance-configuration:
+  serviceFqdn: ${dcae.serversFqdn()[0]}
+  dockerHost:
+    url: https://localhost:4243/v1.23
+    remote: 'true'
+openstack-vm-type:
+  volumeSizeGB: 75
+  memorySizeGB: 8
+  needPublicIp: true
+  numberOfCores: 8
+  rootDiskSizeGB: 40
+  diskSizeGB: 80
+  imageName: Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
+  openstack-flavor-name: 8 GB Performance
+  disk-partitions:
+    osType: ubuntu
+    volumes:
+      opt:
+        uuid: ephemeral
+        size: 80
+        filesystems:
+          "/opt/tools" :
+            size: 80
+            type: ext4
+            mount_opts: ""
+      data:
+        uuid: cinder
+        size: 75
+        filesystems:
+          /data:
+            size: 75
+            type: ext4
+            mount_opts: ''
+
+vm-setup:
+  configuration-files:
+    main:
+      destination: /tmp/docker-databus-controller.conf
+      content: |-
+        # DMaaP Bus Controller OpenSource environment vars
+        CONT_DOMAIN=dcae.simpledemo.openecomp.org
+        DMAAPBC_INSTANCE_NAME=$dcae.instanceName
+        
+        #   The https port
+        #   set to 0 if certificate is not ready
+        DMAAPBC_INT_HTTPS_PORT=0
+        
+        DMAAPBC_KSTOREFILE=/opt/app/dcae-certificates
+        DMAAPBC_KSTOREPASS=foofoofoo
+        DMAAPBC_PVTKEYPASS=barbarbar
+        
+        DMAAPBC_PG_ENABLED=true
+        #DMAAPBC_PGHOST=zldciad1vipstg00.dcae.simpledemo.openecomp.org
+        DMAAPBC_PGHOST=10.0.4.101
+        DMAAPBC_PGCRED=test234-ftl
+        
+        DMAAPBC_DRPROV_FQDN=zldciad1vidrps00.simpledemo.openecomp.org
+        
+        DMAAPBC_AAF_URL=https://aafapi.\\${CONT_DOMAIN}:8095/proxy/
+        
+        DMAAPBC_TOPICMGR_USER=m99751@dmaapBC.openecomp.org
+        DMAAPBC_TOPICMGR_PWD=enc:zyRL9zbI0py3rJAjMS0dFOnYfEw_mJhO
+        DMAAPBC_ADMIN_USER=m99501@dcae.openecomp.org
+        DMAAPBC_ADMIN_PWD=enc:YEaHwOJrwhDY8a6usetlhbB9mEjUq9m
+        
+        DMAAPBC_PE_ENABLED=false
+        DMAAPBC_PE_AAF_ENV=TBD
+        

@@ -1,0 +1,60 @@
+
+
+settings:
+  destination: /tmp/settings.xml
+  content: '
+    <?xml version="1.0" encoding="UTF-8"?>
+    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    	<profiles>
+    		<profile>
+    			<id>open-ecomp</id>
+    			<activation>
+    				<activeByDefault>true</activeByDefault>
+    			</activation>
+    			<repositories>
+    				<repository>
+    					<id>osecomp-nexus-snapshots</id>
+    					<name>OSECOMP Snapshot Repository</name>
+    					<url>@{NEXUS-URL-SNAPSHOTS}</url>
+    				</repository>
+    				<repository>
+    					<id>eclipse</id>
+    					<url>https://repo.eclipse.org/content/repositories/releases</url>
+    					<releases>
+    						<enabled>true</enabled>
+    						<updatePolicy>daily</updatePolicy>
+    					</releases>
+    					<snapshots>
+    						<enabled>false</enabled>
+    					</snapshots>
+    				</repository>
+    			</repositories>
+    		</profile>
+    
+    	</profiles>
+    
+    	<activeProfiles>
+    	
+    		<activeProfile>open-ecomp</activeProfile>
+    		
+    	</activeProfiles>
+    
+    	<servers>
+    	
+    		<server>
+    			<id>osecomp-nexus</id>
+    			<username>@{NEXUS-USER}</username>
+    			<password>@{NEXUS-PASSWORD}</password>
+    		</server>
+    		
+    		<server>
+    			<id>osecomp-nexus-snapshots</id>
+    			<username>@{NEXUS-USER}</username>
+    			<password>@{NEXUS-PASSWORD}</password>
+    		</server>
+    		
+    	</servers>
+    </settings>'
+  

@@ -1,0 +1,31 @@
+controller-instance-configuration: 
+  "$class": org.openecomp.dcae.controller.service.standardeventcollector.service.ControllerServiceStandardeventcollectorServiceInstance
+  image: "${dcae.env('open-ecomp-demo.docker.registry')}/dcae-controller-common-event:${dcae.env('open-ecomp-demo.versions.collector')}"
+  portBindings:
+    sec-http:
+      containerPort: 8080
+      protocol: tcp
+      vmPort: 8080
+    sec-https:
+      containerPort: 8443
+      protocol: tcp
+      vmPort: 8443
+  volumes: 
+    - "/var/log/DCAE/${dcae.serviceName}/${dcae.instanceName}/app:/opt/app/SEC/logs"
+    - "/var/log/DCAE/${dcae.serviceName}/${dcae.instanceName}/manager:/opt/app/manager/logs"
+    - "/var/config/DCAE/${dcae.serviceName}/${dcae.instanceName}/manager:/opt/app/manager/config"
+    - "/opt/app/dcae-certificate:/opt/app/dcae-certificate"
+    - "/opt/app/groovy:/opt/app/groovy"
+  cport: 8080
+  csecport: 8443
+  keystoreloc: /opt/app/dcae-certificate/keystore.jks
+  keystorepwdloc: /opt/app/dcae-certificate/.password
+  keystorealias: dynamicallyset
+  maxinputqueue: 4096
+  authflag: 0
+  authid: secureid
+  authpwd: "IWRjYWVSb2FkbTEyMyEt"
+  authfile: ../etc/userstore
+  checkschemaflag: 1
+  schemafile: ./etc/CommonEventFormat_Vendors_v25.json
+    

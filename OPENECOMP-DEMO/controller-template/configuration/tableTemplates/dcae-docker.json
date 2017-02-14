@@ -1,0 +1,28 @@
+{
+  "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplate",
+  "treePath": "/",
+  "tablePath": "/reports/dcae/docker-containers",
+  "rowPath": "/services/.*/instances/.*/dockerHost/containers/.*",
+  "columns": {
+    "service": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "../../../name"
+    },
+    "instance": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "../../name"
+    },
+    "name": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/name"
+    },
+    "status": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/status"
+    },
+    "command": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/command"
+    },
+  }
+}

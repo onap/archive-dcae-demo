@@ -1,0 +1,22 @@
+
+
+
+"@{ZONE}":
+  description: Rackspace Opensource Demo Tenant
+  type: demo
+  name-short: "@{ZONE}@{STATE}"
+  dns-surfix: dcae.simpledemo.openecomp.org
+  openstack:
+    horizon-url: "@{HORIZON-URL}"
+    keystone-url: "@{KEYSTONE-URL}"
+    version: Juno
+    supports-security-groups: false
+    supports-floating-ips: false
+    tenant:
+      name: "@{OPENSTACK-TENANT-NAME}"
+      tenant-id: "@{OPENSTACK-TENANT-ID}"
+      region: "@{OPENSTACK-REGION}"
+      public-network: 00000000-0000-0000-0000-000000000000
+      private-network: "@{OPENSTACK-PRIVATE-NETWORK}"
+      admin-user: "@{OPENSTACK-USER}"
+      api-key: "@{OPENSTACK-PASSWORD}"

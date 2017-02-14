@@ -1,0 +1,16 @@
+{"alerts": {
+  "90PercentUsage": {
+    "$class": "org.openecomp.ncomp.core.alerts.ThresholdAlert",
+    "operationalState": "OPERATIONAL",
+    "severity": "SEV1",
+    "metricName": "dUsage",
+    "upperBound": "90.0"
+  },
+  "90PercentMetadataUsage": {
+    "$class": "org.openecomp.ncomp.core.alerts.ThresholdAlert",
+    "operationalState": "OPERATIONAL",
+    "severity": "SEV1",
+    "metricName": "fUsage",
+    "upperBound": "90.0"
+  }
+}}

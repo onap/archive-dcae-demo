@@ -1,0 +1,203 @@
+### Description of VM itself
+description: VM that runs PostgreSQL Data Base as a Service
+short-name: pstg
+number-vms-per-location: 1
+application-ids: [ dcae ]
+admin-id: ubuntu
+dns-cnames: [ global ]
+dns-service: 
+  write: 
+    dns-type : gss
+    cluster-type : gss
+    
+lifecycle-management:
+  use-dcae-manager: yes
+
+installation-steps:
+
+- step: shell
+  command: cp /tmp/ecomp-nexus.crt /usr/local/share/ca-certificates/ ; update-ca-certificates
+  application-id: root
+
+- step: shell
+  command: echo 162.242.254.138 ecomp-nexus >> /etc/hosts
+  application-id: root
+
+- step: shell
+  command: |
+    case \\\\\$(hostname -a) in
+      *openecomp.org*)
+        sed -i /`hostname`/d /etc/hosts
+        cat /tmp/vm-*-hosts >> /etc/hosts
+      ;;
+    esac
+    apt-get update ; apt-get install -y maven openjdk-8-jdk unzip python-pip
+    pip install pyyaml
+  application-id: root
+  
+- step: shell
+  command: |
+    (cd /opt/app ; curl -Lo apache-groovy-binary-2.4.6.zip https://dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.6.zip )
+    (cd /opt/app ; unzip apache-groovy-binary-2.4.6.zip )
+    mkdir -p /opt/app/java/jdk
+    ln -s /usr /opt/app/java/jdk/jdk170
+    mkdir -p /opt/app/groovy
+    ln -s /opt/app/groovy-2.4.6 /opt/app/groovy/246
+  application-id: root
+
+- step: shell
+  command: |
+    echo nameserver 10.0.0.1 >>  /etc/resolv.conf
+    echo "prepend domain-name-servers 10.0.0.1;" >> /etc/dhcp/dhclient.conf
+    echo nameserver 10.0.0.1 >> /etc/resolvconf/resolv.conf.d/head  
+
+#- step: maven-artifact
+#  group-id: org.openecomp.dcae.controller
+#  artifact-id: dcae-controller-core-utils
+#  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+#  type: zip
+#  assembly-id: runtime
+#  application-id: dcae
+  
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/zip-snapshots/dcae-controller-core-utils-${dcae.env('open-ecomp-demo.versions.controller')}-runtime.zip
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  type: zip
+  artifact-id: dcae-controller-core-utils
+  application-id: dcae
+
+- step: shell
+  command: |
+    /opt/app/dcae-controller-core-utils/bin/fs-init.py
+
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-common-vm-manager
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: zip
+  assembly-id: runtime
+  application-id: dcae
+
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-storage-postgres-model
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: jar
+  application-id: dcae
+  
+- step: shell
+  command: |
+    # prevent servers from starting
+    echo  "exit 101" > /usr/sbin/policy-rc.d; chmod a+x /usr/sbin/policy-rc.d
+    apt-get update ; apt-get install -y postgresql libpq5 repmgr python-psycopg2 python3-psycopg2 libgetopt-java
+    rm -f /usr/sbin/policy-rc.d
+
+  application-id: root
+
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/cdf_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  type: deb
+
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/postgresql-prep_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  type: deb
+
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/postgresql-config_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  type: deb
+
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/pgaas_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  type: deb
+
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/pgaas-post_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}  
+  type: deb
+
+- step: shell
+  command: |
+    echo "dcae ALL=(postgres) NOPASSWD: ALL" > /etc/sudoers.d/dcae-postgres
+    sudo su dcae -c "/opt/app/dcae-controller-service-common-vm-manager/bin/manager.sh config"
+    sudo su dcae -c "/opt/app/dcae-controller-service-common-vm-manager/bin/manager.sh restart"
+   
+
+openstack-vm-type:  
+  volumeSizeGB: 75
+  memorySizeGB: 8
+  needPublicIp: true
+  numberOfCores: 8
+  rootDiskSizeGB: 40
+  diskSizeGB: 80
+  imageName: Ubuntu 16.04 LTS (Xenial Xerus) (PVHVM)
+  openstack-flavor-name: 8 GB Performance
+  disk-partitions:
+    osType: ubuntu
+    volumes:
+      opt:
+        uuid: ephemeral
+        size: 80
+        filesystems:
+          "/opt/tools" :
+            size: 80
+            type: ext4
+            mount_opts: ""
+      dbroot:
+        uuid: cinder
+        size: 75
+        filesystems:
+          "/dbroot/pgdata" :
+            size: 50
+            type: ext4
+            mount_opts: ""
+          "/dbroot/pglogs" :
+            size: 25
+            type: ext4
+            mount_opts: ""
+
+controller-instance-configuration: 
+  "$class": org.openecomp.dcae.controller.service.common.vm.service.CommonVmServiceInstance
+  script: sudo -u postgres /opt/app/pgaas/bin/dcae_admin_db
+  vmConfiguration: 
+    "$class": org.openecomp.dcae.controller.service.storage.postgres.service.PostgresServiceConfiguration
+    state: master
+    databases:
+      dmaap:
+        description: DMAAP Databus Configuration
+        ownerRole: dmaap_admin
+        roles:
+          dmaap_admin:
+            password: ${dcae.password('postgres.dmaap.admin')}
+            role: admin
+            roleComment: [ admin writer reader]
+          dmaap_user:
+            password: ${dcae.password('postgres.dmaap.user')}
+            role: writer
+            roleComment: [ admin writer reader]
+          dmaap_viewer:
+            password: ${dcae.password('postgres.dmaap.viewer')}
+            role: reader
+            roleComment: [ admin writer reader]
+vm-setup:
+  configuration-files:
+    main:
+      destination: /tmp/postgres.conf
+      content: |-
+        master:  ${ENV.PGAASMASTER ?: "TDB env.yaml@vm-templates.vm-postgresql.PGAASMASTER"}
+        secondmaster: ${ENV.PGAASMASTER2 ?: "TDB env.yaml@vm-templates.vm-postgresql.PGAASMASTER2"}
+        DRTR_NODE_KSTOREFILE: /opt/app/dcae-certificate/keystore.jks
+        DRTR_NODE_KSTOREPASS: "%{certPassword}"
+        DRTR_NODE_PVTKEYPASS: "%{certPassword}"
+        PG_NODES : ${dcae.allServersFqdn().join('|')}
+        PG_JAVA_HOME : /opt/app/java/jdk/jdk170
+        PG_CLUSTER : site

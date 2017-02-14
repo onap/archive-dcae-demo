@@ -1,0 +1,79 @@
+### Description of VM itself
+description: VM that runs the DCAE Controller
+short-name: cont
+number-vms-per-location: 1
+application-ids: [ dcae ]
+admin-id: ubuntu
+dns-gss: [ gss ]
+dns-cnames: [ global ]
+installation-steps:
+
+- step: shell
+  command: cp /tmp/ecomp-nexus.crt /usr/local/share/ca-certificates/ ; update-ca-certificates
+  application-id: root
+
+- step: shell
+  command: echo 162.242.254.138 ecomp-nexus >> /etc/hosts
+  application-id: root
+
+- step: shell
+  command: |
+    apt-get update ; apt-get install -y maven openjdk-7-jdk python-pip
+    pip install pyyaml
+  application-id: root
+  
+- step: shell
+  command: |
+    export SDKMAN_DIR=/opt/app/sdkman
+    curl -s get.sdkman.io | bash 
+    source /opt/app/sdkman/bin/sdkman-init.sh
+    echo Y | sdk install groovy 
+    mkdir -p /opt/app/java/jdk
+    ln -s /usr /opt/app/java/jdk/jdk170
+    mkdir -p /opt/app/groovy
+    ln -s /opt/app/sdkman/candidates/groovy/current /opt/app/groovy/246
+  application-id: root
+
+ 
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-platform-server
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: zip
+  assembly-id: runtime
+  application-id: dcae
+
+openstack-vm-type:  
+  volumeSizeGB: 1024
+  dev-volumeSizeGB: 100 
+  memorySizeGB: 8
+  dev-memorySizeGB: 8
+  needPublicIp: true
+  numberOfCores: 4
+  dev-numberOfCores: 4
+  rootDiskSizeGB: 80
+  imageName: Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
+  openstack-flavor-name: 8 GB Performance
+  disk-partitions:
+    osType: ubuntu
+    volumes:
+      opt:
+        uuid: ephemeral
+        size: 160
+        filesystems:
+          "/opt/tools" :
+            size: 20
+            type: ext4
+            mount_opts: ""
+      dcae-controller-platform-server:
+        uuid: cinder
+        size: 1024
+        filesystems:
+          "/opt/app/dcae-controller-platform-server" :
+            size: 1024
+            type: ext4
+            mount_opts: ""
+
+controller-instance-configuration: 
+  "$class": org.openecomp.dcae.controller.service.vm.VirtualMachineServiceInstance
+

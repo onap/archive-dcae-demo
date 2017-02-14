@@ -1,0 +1,11 @@
+{
+  "$class": "org.openecomp.ncomp.core.metrics.SequenceMetricValueOption",
+  "options": {
+    "basic": {"$class": "org.openecomp.ncomp.core.metrics.BasicMetricValueOption"},
+    "aggregation": {
+      "$class": "org.openecomp.ncomp.core.metrics.AggregationMetricValueOption",
+      "duration": "1hour",
+      "aggregationType": "MAX"
+    }
+  }
+}

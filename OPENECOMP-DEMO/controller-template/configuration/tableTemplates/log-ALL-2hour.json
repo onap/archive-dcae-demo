@@ -1,0 +1,9 @@
+{
+  "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.LogTableTemplate",
+  "treePath": "/",
+  "tablePath": "/reports/logging/2hour/ALL",
+  "minLevel": "UNKNOWN",
+  "minSeverity": "UNKNOWN",
+  "prefixResourcePath": "",
+  "duration": "-2hour"
+}

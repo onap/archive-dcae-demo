@@ -1,0 +1,28 @@
+{
+  "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplate",
+  "treePath": "/",
+  "tablePath": "/reports/dcae/service-instances",
+  "rowPath": "/services/.*/instances/.*",
+  "columns": {
+    "service": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "../name"
+    },
+    "instance": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/name"
+    },
+    "status": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/status"
+    },
+    "healthTestStatus": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/healthTestStatus"
+    },
+    "healthTestMessageCode": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/healthTestMessageCode"
+    },
+  }
+}

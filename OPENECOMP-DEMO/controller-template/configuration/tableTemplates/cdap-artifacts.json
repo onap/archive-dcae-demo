@@ -1,0 +1,28 @@
+{
+  "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplate",
+  "treePath": "/",
+  "tablePath": "/reports/dcae/cdap-artifacts",
+  "rowPath": "/services/cdap.*/instances/.*/artifacts/.*",
+  "columns": {
+    "service": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "../../name"
+    },
+    "instance": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "../name"
+    },
+    "name": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/name"
+    },
+    "version": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/version"
+    },
+    "jarFile": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/jarFile"
+    },
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplate",
+  "treePath": "/",
+  "tablePath": "/reports/dcae/vms",
+  "rowPath": "/services/.*/instances/.*/servers/.*",
+  "columns": {
+    "service": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "../../name"
+    },
+    "instance": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "../name"
+    },
+    "name": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/name"
+    },
+    "dns": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/networks/public/dnsName"
+    },
+    "ip-assignment": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/networks/public/ip"
+    },
+    "state": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/operationalState"
+    },
+    "public-ip": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/publicIp"
+    },
+    "private-ip": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/privateIp"
+    },
+  }
+}

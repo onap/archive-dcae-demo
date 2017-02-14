@@ -1,0 +1,7 @@
+{"alerts": {"8hourDelay": {
+  "$class": "org.openecomp.ncomp.core.alerts.ThresholdAlert",
+  "operationalState": "OPERATIONAL",
+  "severity": "SEV1",
+  "metricName": "timestampOfNewestPartition",
+  "upperBound": "2.88E7"
+}}}

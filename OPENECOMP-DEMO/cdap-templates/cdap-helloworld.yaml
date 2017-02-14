@@ -1,0 +1,15 @@
+controller-instance-configuration:
+  $class: org.openecomp.dcae.controller.service.cdap.CdapServiceInstance
+  namespace: HelloWorld
+  appNames:
+  - HelloWorld
+  flowNames:
+  - HelloWorld.WhoFlow
+  serviceNames:
+  - HelloWorld.Greeting
+  version: '3.5.1'
+  apps:
+    HelloWorld:
+      jarFile: /opt/app/cask-hello-world/lib/HelloWorld-3.5.1.jar
+      artifactName: HelloWorld
+      version: 3.5.1

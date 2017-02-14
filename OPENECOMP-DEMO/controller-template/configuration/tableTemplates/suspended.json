@@ -1,0 +1,42 @@
+{
+  "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.IteratorTableTemplate",
+  "treePath": "/",
+  "tablePath": "/reports/suspended",
+  "columns": {
+    "path": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "$path"
+    },
+    "class": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "$class"
+    },
+    "Operational State": {
+      "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateAttributeColumn",
+      "path": "/operationalState"
+    }
+  },
+  "iterator": {
+    "$class": "org.openecomp.ncomp.core.function.IteratorUsingFunction",
+    "paths": ["/"],
+    "recursive": "true",
+    "filter": {
+      "$class": "org.openecomp.ncomp.core.function.RuleFunction",
+      "rules": [
+        {
+          "matches": [{
+            "$class": "org.openecomp.ncomp.core.function.FunctionMatchAttribute",
+            "path": "/operationalState",
+            "match": "SUSPENDED",
+            "negation": "false"
+          }],
+          "action": {"value": "true"}
+        },
+        {
+          "matches": [],
+          "action": {"value": "false"}
+        }
+      ]
+    }
+  }
+}

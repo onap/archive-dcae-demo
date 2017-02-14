@@ -1,0 +1,8 @@
+{
+  "messageFilter": ".*Authorization: bad PW.*",
+  "level": "UNKNOWN",
+  "severity": "UNKNOWN",
+  "newLevel": "UNKNOWN",
+  "newSeverity": "SEV1",
+  "disabled": "false"
+}

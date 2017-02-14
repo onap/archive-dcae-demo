@@ -1,0 +1,4 @@
+{
+  "$class": "org.openecomp.ncomp.core.metrics.SequenceMetricValueOption",
+  "options": {"basic": {"$class": "org.openecomp.ncomp.core.metrics.BasicMetricValueOption"}}
+}

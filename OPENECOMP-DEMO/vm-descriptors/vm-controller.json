@@ -1,0 +1,8 @@
+{
+  $class : "org.openecomp.dcae.controller.service.vm.VirtualMachineServiceDescriptor",
+  groupId : "org.openecomp.dcae.controller",
+  servicePackage : "org.openecomp.dcae.controller.platform.controller",
+  serviceClass : "ControllerVirtualMachineService",
+  serviceInstanceClass : "VirtualMachineServiceInstance",
+  vmType : "dcae-controller",
+}

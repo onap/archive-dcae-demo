@@ -1,0 +1,22 @@
+description: Docker that runs Data Bus Controller
+lifecycle-management:
+  use-dcae-manager: no
+controller-instance-configuration: 
+  "$class": org.openecomp.dcae.controller.service.docker.DockerServiceInstance
+  image: "${dcae.env('open-ecomp-demo.docker.registry')}/dcae_dmaapbc:${dcae.env('open-ecomp-demo.versions.databus-controller')}"
+  portBindings:
+    sec-http:
+      containerPort: 8080
+      protocol: tcp
+      vmPort: 18080
+    sec-https:
+      containerPort: 8443
+      protocol: tcp
+      vmPort: 18443
+  volumes: 
+    - "/var/log/DCAE/${dcae.serviceName}/${dcae.instanceName}/manager:/opt/app/logs"
+    - "/var/config/DCAE/${dcae.serviceName}/${dcae.instanceName}/manager:/opt/app/config"
+    - "/opt/app/dcae-certificate:/opt/app/dcae-certificate"
+    - "/opt/app/groovy:/opt/app/groovy"
+    - "/etc/hosts:/opt/app/etc/hosts"
+    

@@ -1,0 +1,71 @@
+{
+  "$class": "org.openecomp.ncomp.core.function.RuleFunction",
+  "rules": [
+    {
+      "matches": [{
+        "$class": "org.openecomp.ncomp.core.function.FunctionMatchAttribute",
+        "path": "/fQuota",
+        "match": "0",
+        "negation": "false"
+      }],
+      "action": {"value": "none"}
+    },
+    {
+      "matches": [{
+        "$class": "org.openecomp.ncomp.core.function.FunctionMatchAttribute",
+        "path": "/fQuota",
+        "match": "-1",
+        "negation": "false"
+      }],
+      "action": {"value": "none"}
+    },
+    {
+      "matches": [{
+        "$class": "org.openecomp.ncomp.core.function.FunctionMatchAttribute",
+        "path": "/fQuota",
+        "match": "2",
+        "negation": "false"
+      }],
+      "action": {"value": "none"}
+    },
+    {
+      "matches": [{
+        "$class": "org.openecomp.ncomp.core.function.FunctionMatchAttribute",
+        "path": "/fQuota",
+        "match": "4",
+        "negation": "false"
+      }],
+      "action": {"value": "none"}
+    },
+    {
+      "matches": [{
+        "$class": "org.openecomp.ncomp.core.function.FunctionMatchAttribute",
+        "path": "/name",
+        "match": "root",
+        "negation": "false"
+      }],
+      "action": {"value": "none"}
+    },
+    {
+      "matches": [
+        {
+          "$class": "org.openecomp.ncomp.core.function.FunctionMatchAttribute",
+          "path": "/name",
+          "match": "mint",
+          "negation": "false"
+        },
+        {
+          "$class": "org.openecomp.ncomp.core.function.FunctionMatchAttribute",
+          "path": "../name",
+          "match": "mobilityhome",
+          "negation": "false"
+        }
+      ],
+      "action": {"value": "QfsQuota95"}
+    },
+    {
+      "matches": [],
+      "action": {"value": "QfsQuotaStandard"}
+    }
+  ]
+}

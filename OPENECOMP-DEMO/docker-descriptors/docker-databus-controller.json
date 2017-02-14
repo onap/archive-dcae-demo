@@ -1,0 +1,7 @@
+{
+  $class : "org.openecomp.dcae.controller.service.docker.DockerServiceDescriptor",
+  groupId : "org.openecomp.dcae.controller",
+  servicePackage : "org.openecomp.dcae.controller.service.standardeventcollector.service",
+  serviceClass : "ControllerServiceStandardeventcollectorService",
+  serviceInstanceClass : "ControllerServiceStandardeventcollectorServiceInstance",
+}

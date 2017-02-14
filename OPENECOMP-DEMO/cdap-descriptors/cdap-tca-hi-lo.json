@@ -1,0 +1,7 @@
+{
+  $class : "org.openecomp.dcae.controller.service.cdap.CdapServiceDescriptor",
+  groupId : "org.openecomp.dcae.controller",
+  servicePackage : "org.openecomp.dcae.controller.service.cdap",
+  serviceClass : "CdapService",
+  serviceInstanceClass : "CdapServiceInstance",
+}

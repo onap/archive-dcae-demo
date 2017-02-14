@@ -1,0 +1,156 @@
+### Description of VM itself
+description: VMs that runs Hadoop and CDAP 
+short-name: cdap
+number-vms-per-location: 3
+application-ids: [ dcae ]
+dns-service: 
+  drsub: 
+    dns-type : arecords
+    cluster-type : site
+admin-id: ubuntu
+
+installation-steps:
+
+- step: shell
+  command: cp /tmp/ecomp-nexus.crt /usr/local/share/ca-certificates/ ; update-ca-certificates
+  application-id: root
+
+- step: shell
+  command: echo 162.242.254.138 ecomp-nexus >> /etc/hosts
+  application-id: root
+
+- step: shell
+  command: |
+    echo nameserver 10.0.0.1 >>  /etc/resolv.conf
+    echo "prepend domain-name-servers 10.0.0.1;" >> /etc/dhcp/dhclient.conf
+    echo nameserver 10.0.0.1 >> /etc/resolvconf/resolv.conf.d/head
+
+- step: shell
+  command: |
+    apt-get update ; apt-get install -y maven openjdk-7-jdk unzip python-pip
+    pip install pyyaml
+  application-id: root
+  
+- step: shell
+  command: |
+    (cd /opt/app ; curl -Lo apache-groovy-binary-2.4.6.zip https://dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.6.zip )
+    (cd /opt/app ; unzip apache-groovy-binary-2.4.6.zip )
+    mkdir -p /opt/app/java/jdk
+    ln -s /usr /opt/app/java/jdk/jdk170
+    mkdir -p /opt/app/groovy
+    ln -s /opt/app/groovy-2.4.6 /opt/app/groovy/246
+  application-id: root
+
+#- step: maven-artifact
+#  group-id: org.openecomp.dcae.controller
+#  artifact-id: dcae-controller-core-utils
+#  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+#  type: zip
+#  assembly-id: runtime
+#  application-id: dcae
+  
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/zip-snapshots/dcae-controller-core-utils-${dcae.env('open-ecomp-demo.versions.controller')}-runtime.zip
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  type: zip
+  artifact-id: dcae-controller-core-utils
+  application-id: dcae
+
+- step: shell
+  command: |
+    /opt/app/dcae-controller-core-utils/bin/fs-init.py
+      
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-cdap-cluster-manager
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: zip
+  assembly-id: runtime
+  application-id: dcae
+
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-dmaap-drsub
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: zip
+  assembly-id: runtime
+  application-id: dcae
+
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.apod/dcae-cdap-small-hadoop_${dcae.env('open-ecomp-demo.versions.apod')}.deb
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  type: deb
+
+- step: http
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.apod/dcae-analytics-tca_${dcae.env('open-ecomp-demo.versions.apod')}.deb
+  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
+  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  type: deb
+
+- step: http
+  url: http://repo1.maven.org/maven2/co/cask/cdap/HelloWorld/3.5.1/HelloWorld-3.5.1.jar
+  artifact-id: cask-hello-world
+  type: jar
+
+- step: shell
+  command: |
+    case \\\\\$(hostname -a) in
+      *openecomp.org*)
+        sed -i /`hostname`/d /etc/hosts
+        cat /tmp/vm-*-hosts >> /etc/hosts
+      ;;
+    esac
+    bash /opt/app/dcae-cdap-small-hadoop/install.sh
+    sudo su dcae -c "/opt/app/dcae-controller-service-cdap-cluster-manager/bin/manager.sh config"
+    sudo su dcae -c "/opt/app/dcae-controller-service-cdap-cluster-manager/bin/manager.sh restart"
+  
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
+  artifact-id: dcae-controller-service-dmaap-drsub-manager
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: zip
+  assembly-id: runtime
+  application-id: dcae
+
+lifecycle-management:
+  use-dcae-manager: yes
+  manager-port: 1999
+
+openstack-vm-type:  
+  volumeSizeGB: 75
+  memorySizeGB: 8
+  needPublicIp: true
+  numberOfCores: 8
+  rootDiskSizeGB: 40
+  diskSizeGB: 80
+  imageName: Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
+  #Flavor details to be confirmed. May need to cretae a new flavor
+  openstack-flavor-name: 8 GB Performance
+  disk-partitions:
+    osType: ubuntu
+    volumes:
+      ephemeral:
+        uuid: ephemeral
+        size: 80
+        filesystems:
+          "/opt/tools" :
+            size: 80
+            type: ext4
+            mount_opts: ""
+      data:
+        uuid: cinder
+        size: 75
+        filesystems:
+          "/opt/data": 
+            size: 75
+            type: ext4
+            mount_opts: ''
+
+
+controller-instance-configuration: 
+  cluster: 
+    baseUrl: "http://localhost:10000/v3"
+    remote: "true"
+    

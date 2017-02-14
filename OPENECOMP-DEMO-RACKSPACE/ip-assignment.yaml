@@ -1,0 +1,13 @@
+
+### contains IP assignments VMs to floating ips
+
+
+zldc@{ZONE}@{STATE}cont00: 10.0.4.1
+zldc@{ZONE}@{STATE}pstg00: 10.0.4.101
+zldc@{ZONE}@{STATE}coll00: 10.0.4.102
+zldc@{ZONE}@{STATE}cdap00: 10.0.4.103
+zldc@{ZONE}@{STATE}cdap01: 10.0.4.104
+zldc@{ZONE}@{STATE}cdap02: 10.0.4.105
+zldc@{ZONE}@{STATE}dmpb00: 10.0.4.106
+zldc@{ZONE}@{STATE}dbcl00: 10.0.4.107
+zldc@{ZONE}@{STATE}drps00: 10.0.4.108

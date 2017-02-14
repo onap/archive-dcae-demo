@@ -1,0 +1,10 @@
+{
+  "$class": "org.openecomp.ncomp.sirius.manager.tableTemplate.LogTableTemplate",
+  "treePath": "/",
+  "tablePath": "/reports/logging/1week/WARN",
+  "minLevel": "WARN",
+  "minSeverity": "UNKNOWN",
+  "prefixResourcePath": "",
+  "duration": "-7day",
+  "aggregationDuration": "1day"
+}

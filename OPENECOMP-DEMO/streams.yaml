@@ -1,0 +1,23 @@
+## defining feeds
+## works for DataRouter Feeds and DataRouter publishers
+
+streams:
+## Common Event         
+  SEC_MEASUREMENT_OUTPUT:
+    stream-type: message-router
+    databus-type: topic-public
+    description: Common Event Collector output topic
+    publishers:
+      docker-common-event:  
+        local-name: sec_measurement
+    subscribers:
+      cdap-tca-hi-lo:
+        local-name: event-input
+  TCA_EVENT_OUTPUT:
+    stream-type: message-router
+    databus-type: topic-public
+    description: TCA output topic
+    publishers:
+      cdap-tca-hi-lo:
+        local-name: alert-output
+        
