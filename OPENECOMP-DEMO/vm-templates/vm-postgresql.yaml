@@ -88,33 +88,23 @@ installation-steps:
   application-id: root
 
 - step: http
-  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/cdf_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
-  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
-  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.pgaas/deb-snapshots/org.openecomp.dcae.storage.pgaas/cdf_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
   type: deb
 
 - step: http
-  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/postgresql-prep_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
-  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
-  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.pgaas/deb-snapshots/org.openecomp.dcae.storage.pgaas/postgresql-prep_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
   type: deb
 
 - step: http
-  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/postgresql-config_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
-  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
-  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.pgaas/deb-snapshots/org.openecomp.dcae.storage.pgaas/postgresql-config_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
   type: deb
 
 - step: http
-  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/pgaas_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
-  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
-  password: ${dcae.env('open-ecomp-demo.maven.password')}
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.pgaas/deb-snapshots/org.openecomp.dcae.storage.pgaas/pgaas_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
   type: deb
 
 - step: http
-  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.storage.pgaas/pgaas-post_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
-  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
-  password: ${dcae.env('open-ecomp-demo.maven.password')}  
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.pgaas/deb-snapshots/org.openecomp.dcae.storage.pgaas/pgaas-post_${dcae.env('open-ecomp-demo.versions.postgres')}.deb
   type: deb
 
 - step: shell

@@ -45,14 +45,10 @@ settings:
     	
     		<server>
     			<id>osecomp-nexus</id>
-    			<username>@{NEXUS-USER}</username>
-    			<password>@{NEXUS-PASSWORD}</password>
     		</server>
     		
     		<server>
     			<id>osecomp-nexus-snapshots</id>
-    			<username>@{NEXUS-USER}</username>
-    			<password>@{NEXUS-PASSWORD}</password>
     		</server>
     		
     	</servers>

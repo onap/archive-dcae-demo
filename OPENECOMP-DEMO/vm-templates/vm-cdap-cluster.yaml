@@ -71,14 +71,10 @@ installation-steps:
 
 - step: http
   url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.apod/deb-snapshots/dcae-cdap-small-hadoop_${dcae.env('open-ecomp-demo.versions.apod')}.deb
-  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
-  password: ${dcae.env('open-ecomp-demo.maven.password')}
   type: deb
 
 - step: http
   url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.apod.analytics/deb-snapshots/dcae-analytics-tca_${dcae.env('open-ecomp-demo.versions.apod')}.deb
-  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
-  password: ${dcae.env('open-ecomp-demo.maven.password')}
   type: deb
 
 - step: http
