@@ -6,7 +6,15 @@
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<openecomp.nexus.releases>https://nexus.openecomp.org/content/repositories/releases/</openecomp.nexus.releases>
+		<openecomp.nexus.snapshots>https://nexus.openecomp.org/content/repositories/snapshots/</openecomp.nexus.snapshots>
+	</properties>
+
+
 	<pluginRepositories>
 		<!-- Black Duck plugin dependencies -->
 		<pluginRepository>
@@ -21,9 +29,9 @@
 			<url>http://maven.restlet.com</url>
 		</pluginRepository>
 	</pluginRepositories>
-<build>
+	<build>
 		<plugins>
-		<!-- blackduck maven plugin -->
+			<!-- blackduck maven plugin -->
 			<plugin>
 				<groupId>com.blackducksoftware.integration</groupId>
 				<artifactId>hub-maven-plugin</artifactId>
@@ -43,20 +51,20 @@
 					</execution>
 				</executions>
 			</plugin>
-       <!-- site maven plugin -->
-       <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-           <artifactId>maven-site-plugin</artifactId>
-           <version>3.6</version>
-           <dependencies>
-             <dependency>
-               <groupId>org.apache.maven.wagon</groupId>
-               <artifactId>wagon-webdav-jackrabbit</artifactId>
-               <version>2.10</version>
-             </dependency>
-           </dependencies>
-       </plugin>
-    
+			<!-- site maven plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.6</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.wagon</groupId>
+						<artifactId>wagon-webdav-jackrabbit</artifactId>
+						<version>2.10</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.6</version>
@@ -137,44 +145,44 @@
 	</build>
 
 
-	
-		<distributionManagement>
-			<repository>
-				<id>osecomp-nexus-releases</id>
-				<name>OSECOMP Release Repository</name>
-				<url>${openecomp.nexus.releases}</url>
-			</repository>
-			<snapshotRepository>
-				<id>osecomp-nexus-snapshots</id>
-				<name>OSECOMP Snapshot Repository</name>
-				<url>${openecomp.nexus.snapshots}</url>
-			</snapshotRepository>
-			<site>
-				<id>dcae-javadoc</id>
-				<url>${site.urlroot}/${project.artifactId}/${project.version}/</url>
-			</site>
-		</distributionManagement>
-	
-   <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
-                <configuration>
-                    <failOnError>false</failOnError>
-                    <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
-                    <docletArtifact>
-                        <groupId>org.umlgraph</groupId>
-                        <artifactId>umlgraph</artifactId>
-                        <version>5.6</version>
-                    </docletArtifact>
-                    <additionalparam>-views</additionalparam>
-                    <useStandardDocletOptions>true</useStandardDocletOptions>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
+
+	<distributionManagement>
+		<repository>
+			<id>ecomp-releases</id>
+			<name>OpenECOMP Release Repository</name>
+			<url>${openecomp.nexus.releases}</url>
+		</repository>
+		<snapshotRepository>
+			<id>ecomp-snapshots</id>
+			<name>OpenECOMP Snapshot Repository</name>
+			<url>${openecomp.nexus.snapshots}</url>
+		</snapshotRepository>
+		<site>
+			<id>dcae-javadoc</id>
+			<url>${site.urlroot}/${project.artifactId}/${project.version}/</url>
+		</site>
+	</distributionManagement>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+					<failOnError>false</failOnError>
+					<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+					<docletArtifact>
+						<groupId>org.umlgraph</groupId>
+						<artifactId>umlgraph</artifactId>
+						<version>5.6</version>
+					</docletArtifact>
+					<additionalparam>-views</additionalparam>
+					<useStandardDocletOptions>true</useStandardDocletOptions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 
 
 	<dependencies>

@@ -41,20 +41,12 @@ installation-steps:
     ln -s /opt/app/groovy-2.4.6 /opt/app/groovy/246
   application-id: root
 
-#- step: maven-artifact
-#  group-id: org.openecomp.dcae.controller
-#  artifact-id: dcae-controller-core-utils
-#  version: ${dcae.env('open-ecomp-demo.versions.controller')}
-#  type: zip
-#  assembly-id: runtime
-#  application-id: dcae
-  
-- step: http
-  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/zip-snapshots/dcae-controller-core-utils-${dcae.env('open-ecomp-demo.versions.controller')}-runtime.zip
-  user-name: ${dcae.env('open-ecomp-demo.maven.user')}
-  password: ${dcae.env('open-ecomp-demo.maven.password')}
-  type: zip
+- step: maven-artifact
+  group-id: org.openecomp.dcae.controller
   artifact-id: dcae-controller-core-utils
+  version: ${dcae.env('open-ecomp-demo.versions.controller')}
+  type: zip
+  assembly-id: runtime
   application-id: dcae
 
 - step: shell
@@ -78,13 +70,13 @@ installation-steps:
   application-id: dcae
 
 - step: http
-  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.apod/dcae-cdap-small-hadoop_${dcae.env('open-ecomp-demo.versions.apod')}.deb
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.apod/deb-snapshots/dcae-cdap-small-hadoop_${dcae.env('open-ecomp-demo.versions.apod')}.deb
   user-name: ${dcae.env('open-ecomp-demo.maven.user')}
   password: ${dcae.env('open-ecomp-demo.maven.password')}
   type: deb
 
 - step: http
-  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae/deb-snapshots/org.openecomp.dcae.apod/dcae-analytics-tca_${dcae.env('open-ecomp-demo.versions.apod')}.deb
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.apod.analytics/deb-snapshots/dcae-analytics-tca_${dcae.env('open-ecomp-demo.versions.apod')}.deb
   user-name: ${dcae.env('open-ecomp-demo.maven.user')}
   password: ${dcae.env('open-ecomp-demo.maven.password')}
   type: deb
