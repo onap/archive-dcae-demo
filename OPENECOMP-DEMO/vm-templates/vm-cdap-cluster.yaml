@@ -33,6 +33,7 @@ installation-steps:
   
 - step: shell
   command: |
+    mkdir -p /opt/app
     (cd /opt/app ; curl -Lo apache-groovy-binary-2.4.6.zip https://dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.6.zip )
     (cd /opt/app ; unzip apache-groovy-binary-2.4.6.zip )
     mkdir -p /opt/app/java/jdk
@@ -70,7 +71,7 @@ installation-steps:
   application-id: dcae
 
 - step: http
-  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.apod/deb-snapshots/dcae-cdap-small-hadoop_${dcae.env('open-ecomp-demo.versions.apod')}.deb
+  url: ${dcae.env('open-ecomp-demo.maven.rawurl')}/org.openecomp.dcae.apod.cdap/deb-snapshots/dcae-cdap-small-hadoop_${dcae.env('open-ecomp-demo.versions.apod')}.deb
   type: deb
 
 - step: http

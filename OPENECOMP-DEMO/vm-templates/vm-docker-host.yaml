@@ -32,6 +32,7 @@ installation-steps:
   
 - step: shell
   command: |
+    mkdir -p /opt/app
     (cd /opt/app ; curl -Lo apache-groovy-binary-2.4.6.zip https://dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.6.zip )
     (cd /opt/app ; unzip apache-groovy-binary-2.4.6.zip )
     mkdir -p /opt/app/java/jdk
