@@ -13,7 +13,7 @@ controller-instance-configuration:
     }
   apps: 
     dcae-tca:
-        jarFile: /opt/app/cdap-apps/dcae-analytics-tca-1.0.0.jar
+        jarFile: /opt/app/cdap-apps/dcae-analytics-tca-1.0.0-SNAPSHOT.jar
         artifactName: dcae-analytics-tca
         version: 1.0.0
         appConfigFileContent: '{config:{
