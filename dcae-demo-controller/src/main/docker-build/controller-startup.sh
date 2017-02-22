@@ -37,17 +37,21 @@ bin/dcae-controller.sh undeploy-service-instance -i $ZONE -s vm-cdap-cluster &
 bin/dcae-controller.sh deploy-user -l $ZONE -p OPEN-ECOMP -u $OPENSTACK_KEYNAME
 
 NETWORKPATH=/openstack/locations/$ZONE/projects/OPEN-ECOMP/networks/$NETWORK
+KEYPATH=/openstack/locations/$ZONE/projects/OPEN-ECOMP/keypairs/$OPENSTACK_KEYNAME
 
 sleep 1m
 bin/dcae-controller.sh wait-for --timeout 300 --frequency 5 --path $NETWORKPATH --exists --verbose
+bin/dcae-controller.sh wait-for --timeout 300 --frequency 5 --path $KEYPATH --exists --verbose
 bin/dcae-controller.sh deploy-service-instance -i $ZONE -s vm-docker-host-1 
 
 sleep 1m
 bin/dcae-controller.sh wait-for --timeout 300 --frequency 5 --path $NETWORKPATH --exists --verbose
+bin/dcae-controller.sh wait-for --timeout 300 --frequency 5 --path $KEYPATH --exists --verbose
 bin/dcae-controller.sh deploy-service-instance -i $ZONE -s vm-postgresql  
 
 sleep 2m
 bin/dcae-controller.sh wait-for --timeout 300 --frequency 5 --path $NETWORKPATH --exists --verbose
+bin/dcae-controller.sh wait-for --timeout 300 --frequency 5 --path $KEYPATH --exists --verbose
 bin/dcae-controller.sh deploy-service-instance -i $ZONE -s vm-cdap-cluster
 
 bin/dcae-controller.sh wait-for --timeout 900 --path /services/vm-docker-host-1/instances/$ZONE --attribute healthTestStatus --match GREEN --verbose
