@@ -25,12 +25,8 @@ installation-steps:
 
 - step: shell
   command: |
-    case \\\\\$(hostname -a) in
-      *openecomp.org*)
-        sed -i /`hostname`/d /etc/hosts
-        cat /tmp/vm-*-hosts >> /etc/hosts
-      ;;
-    esac
+    sed -i /`hostname`/d /etc/hosts
+    cat /tmp/vm-*-hosts >> /etc/hosts
     apt-get update ; apt-get install -y maven openjdk-8-jdk unzip python-pip
     pip install pyyaml
   application-id: root
