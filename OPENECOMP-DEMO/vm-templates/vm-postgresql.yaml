@@ -27,6 +27,10 @@ installation-steps:
   command: |
     sed -i /`hostname`/d /etc/hosts
     cat /tmp/vm-*-hosts >> /etc/hosts
+    while ! nslookup security.ubuntu.com; do
+      echo DNS for security.ubuntu.com FAILED
+      sleep 1m
+    done
     apt-get update ; apt-get install -y maven openjdk-8-jdk unzip python-pip
     pip install pyyaml
   application-id: root
