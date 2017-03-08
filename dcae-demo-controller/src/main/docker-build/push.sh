@@ -9,8 +9,23 @@ cd $(dirname $(readlink -e $0))
 GITROOT=../../..
 VERSION=$(grep version $GITROOT/pom.xml | head -1 | sed 'sX</.*XX' | sed 's/.*>//')
 DOCKER_REG=$1
-TAG=$DOCKER_REG/dcae-controller:$VERSION
+TAG=$DOCKER_REG/openecomp/dcae-controller:$VERSION
 
 docker tag dcae-controller:$VERSION $TAG
 docker push $TAG
+
+TAG1=$DOCKER_REG/openecomp/dcae-controller:$VERSION-$(date +%Y%m%dT%H%M%S)
+docker tag dcae-controller:$VERSION $TAG1
+docker push $TAG1
+
+case $VERSION in
+  *SNAPSHOT)
+    echo > /dev/null
+    ;;
+  *)
+    TAG2=$DOCKER_REG/openecomp/dcae-controller:latest
+    docker tag dcae-controller:$VERSION $TAG2
+    docker push $TAG2
+    ;;
+esac
 
