@@ -94,8 +94,8 @@ installation-steps:
     /opt/app/dcae-controller-core-utils/bin/install-docker.sh
     adduser dcae docker
     docker login -u ${dcae.env('open-ecomp-demo.maven.user')} -p ${dcae.env('open-ecomp-demo.maven.password')} ${dcae.env('open-ecomp-demo.docker.registry')} 
-    docker pull ${dcae.env('open-ecomp-demo.docker.registry')}/dcae-controller-common-event:${dcae.env('open-ecomp-demo.versions.collector')}
-    docker pull ${dcae.env('open-ecomp-demo.docker.registry')}/dcae_dmaapbc:${dcae.env('open-ecomp-demo.versions.databus-controller')}
+    docker pull ${dcae.env('open-ecomp-demo.docker.registry')}/openecomp/dcae-collector-common-event:${dcae.env('open-ecomp-demo.versions.collector')}
+    docker pull ${dcae.env('open-ecomp-demo.docker.registry')}/openecomp/dcae-dmaapbc:${dcae.env('open-ecomp-demo.versions.databus-controller')}
     sudo su dcae -c "/opt/app/dcae-controller-service-docker-host-manager/bin/manager.sh config"
     sudo su dcae -c "/opt/app/dcae-controller-service-docker-host-manager/bin/manager.sh restart"
     mkdir -p /var/config/DCAE
