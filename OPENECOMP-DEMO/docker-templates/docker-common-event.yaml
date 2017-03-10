@@ -1,6 +1,6 @@
 controller-instance-configuration: 
   "$class": org.openecomp.dcae.controller.service.standardeventcollector.service.ControllerServiceStandardeventcollectorServiceInstance
-  image: "${dcae.env('open-ecomp-demo.docker.registry')}/dcae-controller-common-event:${dcae.env('open-ecomp-demo.versions.collector')}"
+  image: "${dcae.env('open-ecomp-demo.docker.registry')}/openecomp/dcae-collector-common-event:${dcae.env('open-ecomp-demo.versions.collector')}"
   portBindings:
     sec-http:
       containerPort: 8080
