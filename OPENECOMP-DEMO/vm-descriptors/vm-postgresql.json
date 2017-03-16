@@ -2,7 +2,6 @@
   $class : "org.openecomp.dcae.controller.service.vm.VirtualMachineServiceDescriptor",
   groupId : "org.openecomp.dcae.controller",
   artifact : "dcae-controller-service-common-vm",
-  version : "0.1.0-SNAPSHOT",
   servicePackage : "org.openecomp.dcae.controller.service.common.vm.service",
   serviceClass : "CommonVmService",
   serviceInstanceClass : "CommonVmServiceInstance",

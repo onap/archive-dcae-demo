@@ -2,7 +2,6 @@
   $class : "org.openecomp.dcae.controller.service.vm.VirtualMachineServiceDescriptor",
   groupId : "org.openecomp.dcae.controller",
   artifact : "dcae-controller-service-docker-host",
-  version : "0.1.0-SNAPSHOT",
   servicePackage : "org.openecomp.dcae.controller.service.docker.host.service",
   serviceClass : "DockerHostService",
   serviceInstanceClass : "DockerHostServiceInstance",
