@@ -22,19 +22,19 @@ settings:
             <repository>
               <id>snapshots</id>
               <name>snapshots</name>
-              <url>https://nexus.openecomp.org/content/repositories/snapshots/</url>
+              <url>https://nexus.onap.org/content/repositories/snapshots/</url>
             </repository>
             
             <repository>
               <id>releases</id>
               <name>releases</name>
-              <url>https://nexus.openecomp.org/content/repositories/releases/</url>
+              <url>https://nexus.onap.org/content/repositories/releases/</url>
             </repository>
             
             <repository>
               <id>staging</id>
               <name>staging</name>
-              <url>https://nexus.openecomp.org/content/groups/staging/</url>
+              <url>https://nexus.onap.org/content/groups/staging/</url>
             </repository>
             
     			</repositories>
