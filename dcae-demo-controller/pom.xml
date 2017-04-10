@@ -138,7 +138,7 @@
 		</snapshotRepository>
 		<site>
 			<id>ecomp-site</id>
-			<url>dav:${nexusproxy}/content/sites/site/org/openecomp/dcae/demo/${project.artifactId}/${project.version}/</url>
+			<url>dav:${nexusproxy}/content/sites/site/org/onap/dcae/demo/${project.artifactId}/${project.version}/</url>
 		</site>
 	</distributionManagement>
 
