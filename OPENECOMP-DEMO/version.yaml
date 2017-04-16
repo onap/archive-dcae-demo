@@ -1,0 +1,10 @@
+
+### handle version conversions between R1 and R2 ONAP rebased 
+
+version: ONAP-R2
+
+supportedVersions:
+### ONAP R1 
+  UNKNOWN:
+
+    
