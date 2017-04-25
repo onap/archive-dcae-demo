@@ -1,0 +1,7 @@
+@{dcae_ip_addr}   zldc@{ZONE}@{STATE}cont00.dcae.simpledemo.openecomp.org cont00 zldc@{ZONE}@{STATE}cont00 
+@{dcae_pstg00_ip_addr} zldc@{ZONE}@{STATE}pstg00.dcae.simpledemo.openecomp.org pstg00 zldc@{ZONE}@{STATE}pstg00
+@{dcae_coll00_ip_addr} zldc@{ZONE}@{STATE}coll00.dcae.simpledemo.openecomp.org coll00 zldc@{ZONE}@{STATE}coll00 dcae-coll-@{ZONE}.dcae.simpledemo.openecomp.org
+@{dcae_cdap00_ip_addr} zldc@{ZONE}@{STATE}cdap00.dcae.simpledemo.openecomp.org cdap00 zldc@{ZONE}@{STATE}cdap00 
+@{dcae_cdap01_ip_addr} zldc@{ZONE}@{STATE}cdap01.dcae.simpledemo.openecomp.org cdap01 zldc@{ZONE}@{STATE}cdap01
+@{dcae_cdap02_ip_addr} zldc@{ZONE}@{STATE}cdap02.dcae.simpledemo.openecomp.org cdap02 zldc@{ZONE}@{STATE}cdap02
+@{POLICY-IP}   policy.api.simpledemo.openecomp.org

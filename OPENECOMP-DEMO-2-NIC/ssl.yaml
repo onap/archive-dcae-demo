@@ -1,0 +1,42 @@
+
+certificates:
+  ecomp-nexus:
+    destination: /tmp/ecomp-nexus.crt
+    content: >
+      -----BEGIN CERTIFICATE-----
+      
+      MIIDtzCCAp+gAwIBAgIEet16RjANBgkqhkiG9w0BAQsFADB2MQswCQYDVQQGEwJVUzEUMBIGA1UE
+      
+      CBMLVW5zcGVjaWZpZWQxFDASBgNVBAcTC1Vuc3BlY2lmaWVkMREwDwYDVQQKEwhTb25hdHlwZTEQ
+      
+      MA4GA1UECxMHRXhhbXBsZTEWMBQGA1UEAwwNKi5lY29tcC1uZXh1czAeFw0xNjExMTQxMDE5NDJa
+      
+      Fw0zMDA3MjQxMDE5NDJaMHYxCzAJBgNVBAYTAlVTMRQwEgYDVQQIEwtVbnNwZWNpZmllZDEUMBIG
+      
+      A1UEBxMLVW5zcGVjaWZpZWQxETAPBgNVBAoTCFNvbmF0eXBlMRAwDgYDVQQLEwdFeGFtcGxlMRYw
+      
+      FAYDVQQDDA0qLmVjb21wLW5leHVzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqkDu
+      
+      vC91cZxOaRMYGHSyDeuw4hyXjqyD5Etl5L5TNN7+uFKEtvXsRYOxtD62TqWHKozffLE5o6zoRZL4
+      
+      8qNTQyAx0LaEfWfR2w0jat+UqtqEtW0xpOD0/O0qRq5Y/XG3Yr8SQ/y84Pr1FIflM7pM4PZTt3kc
+      
+      UfqzbaONW5K8t+UG+5jgNXdRk3hln8WMunVZeci0J6TV+tWs9tOeAKBdpI7K7LV+FJBaF8vBAw2x
+      
+      8AhlNPXKQUhK+M3DD73c1aLWrZ3mIwJXt2oQUDwgtXGCPR1/Z9f2tTAoDxpzvkwtP/BtH3qvgtpY
+      
+      QfDNmWbJVHh6ll39Hapt7V0v4aCRSN21ZQIDAQABo00wSzAMBgNVHRMEBTADAQH/MBwGA1UdEQQV
+      
+      MBOCC2Vjb21wLW5leHVzhwQK0MVLMB0GA1UdDgQWBBQxcUlk/lkKkwSz0GuewbXptJxl+zANBgkq
+      
+      hkiG9w0BAQsFAAOCAQEAPnNbtdreMZaUSjv+1eqpriLKquwnZhnwWENn1u3sw4hTAWQc+ehhogGg
+      
+      eIqPN81Dt3jhr0bYZW+r3gGq7tgrLxdSXso8bTtqHsFLszirgWcQXDlBQGnw9wqp/KBzeDJInJep
+      
+      d6aGu3yBXV6459S/mClxZTSvsR+Vz3rRWxx01R3/ft5/myqrRMDnEncqPopTbEamBuUJL3eJDpFO
+      
+      xlVqYR3y6AXwwguMaTiHMfFBmDOVaz4K8Qy6AaHH9eoch9fxOJ/7ASvqSwkC9GYTJSnF2vE37rmH
+      
+      kPp//Vm4WSnQ2NrBGkH9rUUdYdDdgWJYnTeZ+YFd8J6z9xNiEn9QKQNNcA==
+      
+      -----END CERTIFICATE-----
