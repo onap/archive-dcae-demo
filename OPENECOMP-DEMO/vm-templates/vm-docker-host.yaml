@@ -104,9 +104,9 @@ installation-steps:
     
 - step: shell
   command: |
-    echo nameserver 10.0.0.1 >>  /etc/resolv.conf
-    echo "prepend domain-name-servers 10.0.0.1;" >> /etc/dhcp/dhclient.conf
-    echo nameserver 10.0.0.1 >> /etc/resolvconf/resolv.conf.d/head
+    echo nameserver ${dcae.env('open-ecomp-demo.dns-ip')} >>  /etc/resolv.conf
+    echo "prepend domain-name-servers ${dcae.env('open-ecomp-demo.dns-ip')};" >> /etc/dhcp/dhclient.conf
+    echo nameserver ${dcae.env('open-ecomp-demo.dns-ip')} >> /etc/resolvconf/resolv.conf.d/head
     
 - step: shell
   command: |
@@ -168,7 +168,7 @@ vm-setup:
         
         DMAAPBC_PG_ENABLED=true
         #DMAAPBC_PGHOST=zldciad1vipstg00.dcae.simpledemo.openecomp.org
-        DMAAPBC_PGHOST=10.0.4.101
+        DMAAPBC_PGHOST=${dcae.env('open-ecomp-demo.postgres-ip')}
         DMAAPBC_PGCRED=test234-ftl
         
         DMAAPBC_DRPROV_FQDN=zldciad1vidrps00.simpledemo.openecomp.org

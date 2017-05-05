@@ -12,6 +12,7 @@ export PATH=$JAVA_HOME/bin:$GROOVY_HOME/bin:/opt/app/git/2.4.1/bin:$PATH
 cd /opt/app/dcae-controller-platform-server
 
 export ZONE=$(grep ZONE /opt/app/dcae-controller/config.yaml | sed s/ZONE:.//)
+export BASE=$(grep BASE /opt/app/dcae-controller/config.yaml | sed s/BASE:.//)
 
 OPENSTACK_KEYNAME=$(grep OPENSTACK-KEYNAME /opt/app/dcae-controller/config.yaml | sed s/OPENSTACK-KEYNAME:.//)
 NETWORK=$(grep OPENSTACK-PRIVATE-NETWORK /opt/app/dcae-controller/config.yaml | sed s/OPENSTACK-PRIVATE-NETWORK:.//)

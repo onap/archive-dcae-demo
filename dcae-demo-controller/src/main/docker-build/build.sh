@@ -24,7 +24,7 @@ cp $ROOT/target/assembly/lib/*.jar lib/
 # copy configuration files for controller
 ( 
   cd $ROOT/..
-  tar cfz - OPENECOMP-DEMO OPENECOMP-DEMO-RACKSPACE 
+  tar cfz - OPENECOMP-DEMO OPENECOMP-DEMO-* 
 ) > config.tar.gz
 
 if [ "$1" == "nobuild" ]; then exit; fi

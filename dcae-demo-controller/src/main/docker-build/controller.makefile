@@ -1,7 +1,7 @@
 
 restart: stop start
 gen-config:
-	bin/dcae-controller.sh rackspace-substitute --from OPENECOMP-DEMO-RACKSPACE --to OPENECOMP-DEMO-$(ZONE) --file /opt/app/dcae-controller/config.yaml
+	bin/dcae-controller.sh rackspace-substitute --from OPENECOMP-DEMO-$(BASE) --to OPENECOMP-DEMO-$(ZONE) --file /opt/app/dcae-controller/config.yaml
 	java -cp 'lib/*' org.openecomp.dcae.controller.operation.utils.GenControllerConfiguration $(ZONE) . GITLINK OPENECOMP-DEMO
 sync:
 	bin/dcae-controller.sh sync-configuration --environment OPENECOMP-DEMO-$(ZONE)
