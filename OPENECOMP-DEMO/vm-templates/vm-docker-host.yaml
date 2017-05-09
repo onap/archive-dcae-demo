@@ -127,8 +127,8 @@ openstack-vm-type:
   numberOfCores: 8
   rootDiskSizeGB: 40
   diskSizeGB: 80
-  imageName: Ubuntu 14.04 LTS (Trusty Tahr) (PVHVM)
-  openstack-flavor-name: 8 GB Performance
+  imageName: ${dcae.env('open-ecomp-demo.image.ubuntu14-04')}
+  openstack-flavor-name: ${dcae.env('open-ecomp-demo.flavor')}
   disk-partitions:
     osType: ubuntu
     volumes:
