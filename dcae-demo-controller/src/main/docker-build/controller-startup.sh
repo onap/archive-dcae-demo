@@ -16,6 +16,7 @@ export BASE=$(grep BASE /opt/app/dcae-controller/config.yaml | sed s/BASE:.//)
 
 OPENSTACK_KEYNAME=$(grep OPENSTACK-KEYNAME /opt/app/dcae-controller/config.yaml | sed s/OPENSTACK-KEYNAME:.//)
 NETWORK=$(grep OPENSTACK-PRIVATE-NETWORK /opt/app/dcae-controller/config.yaml | sed s/OPENSTACK-PRIVATE-NETWORK:.//)
+FLAVOR=$(grep FLAVOR-LARGE /opt/app/dcae-controller/config.yaml | sed s/FLAVOR-LARGE:.//)
 
 echo nameserver 10.0.0.1 >> /etc/resolv.conf
 
@@ -39,6 +40,18 @@ bin/dcae-controller.sh deploy-user -l $ZONE -p OPEN-ECOMP -u $OPENSTACK_KEYNAME
 
 NETWORKPATH=/openstack/locations/$ZONE/projects/OPEN-ECOMP/networks/$NETWORK
 KEYPATH=/openstack/locations/$ZONE/projects/OPEN-ECOMP/keypairs/$OPENSTACK_KEYNAME
+FLAVORPATH=/openstack/locations/$ZONE/flavors/$FLAVOR
+
+## wait for flavor but since flavor name may have spaces which 'wait-for' does not support we do this hack
+## wait 11 minutes
+
+i=0
+until [ $i = "66" ]; do 
+  ((i++))
+  if [ -e "data/resources/$FLAVORPATH" ]; then break; fi
+  echo waiting for data/resources/$FLAVORPATH
+  sleep 10
+done
 
 sleep 1m
 bin/dcae-controller.sh wait-for --timeout 300 --frequency 5 --path $NETWORKPATH --exists --verbose
