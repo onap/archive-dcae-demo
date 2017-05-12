@@ -171,16 +171,3 @@ controller-instance-configuration:
             password: ${dcae.password('postgres.dmaap.viewer')}
             role: reader
             roleComment: [ admin writer reader]
-vm-setup:
-  configuration-files:
-    main:
-      destination: /tmp/postgres.conf
-      content: |-
-        master:  ${ENV.PGAASMASTER ?: "TDB env.yaml@vm-templates.vm-postgresql.PGAASMASTER"}
-        secondmaster: ${ENV.PGAASMASTER2 ?: "TDB env.yaml@vm-templates.vm-postgresql.PGAASMASTER2"}
-        DRTR_NODE_KSTOREFILE: /opt/app/dcae-certificate/keystore.jks
-        DRTR_NODE_KSTOREPASS: "%{certPassword}"
-        DRTR_NODE_PVTKEYPASS: "%{certPassword}"
-        PG_NODES : ${dcae.allServersFqdn().join('|')}
-        PG_JAVA_HOME : /opt/app/java/jdk/jdk170
-        PG_CLUSTER : site
