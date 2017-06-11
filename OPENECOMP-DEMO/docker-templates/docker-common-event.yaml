@@ -16,6 +16,8 @@ controller-instance-configuration:
     - "/var/config/DCAE/${dcae.serviceName}/${dcae.instanceName}/manager:/opt/app/manager/config"
     - "/opt/app/dcae-certificate:/opt/app/dcae-certificate"
     - "/opt/app/groovy:/opt/app/groovy"
+  envs:
+    - "COLLECTOR_IP=${dcae.env('open-ecomp-demo.collector-ip')}"
   cport: 8080
   csecport: 8443
   keystoreloc: /opt/app/dcae-certificate/keystore.jks
