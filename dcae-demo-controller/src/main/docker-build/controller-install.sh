@@ -1,6 +1,9 @@
 
 set -e
 
+if [ ! -z ${http_proxy} ]; then echo "Acquire::http::proxy  \"${http_proxy}\";" >> /etc/apt/apt.conf; fi && \
+if [ ! -z ${https_proxy} ]; then echo "Acquire::https::proxy \"${https_proxy}\";" >> /etc/apt/apt.conf; fi
+
 apt-get update ; apt-get install -y maven openjdk-7-jdk curl dnsutils zip telnet
 
 ### GROOVY
