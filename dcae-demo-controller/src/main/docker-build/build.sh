@@ -31,5 +31,11 @@ if [ "$1" == "nobuild" ]; then exit; fi
 
 ## build Docker
 
-docker build -t dcae-controller:$VERSION .
-
+docker_build="docker build -t dcae-controller:$VERSION ."
+if [ $http_proxy ]; then
+    docker_build+=" --build-arg http_proxy=$http_proxy"
+fi
+if [ $https_proxy ]; then
+    docker_build+=" --build-arg https_proxy=$https_proxy"
+fi
+eval $docker_build
