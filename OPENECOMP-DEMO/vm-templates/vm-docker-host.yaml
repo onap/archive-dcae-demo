@@ -20,12 +20,11 @@ installation-steps:
 
 - step: shell
   command: |
-    case \\\\\$(hostname -a) in
-      *openecomp.org*)
-        sed -i /`hostname`/d /etc/hosts
-        cat /tmp/vm-*-hosts >> /etc/hosts
-      ;;
-    esac
+    sed -i /`hostname`/d /etc/hosts
+    cat /tmp/vm-*-hosts >> /etc/hosts
+    echo auto eth1 >> /etc/network/interfaces
+    echo iface eth1 inet dhcp >> /etc/network/interfaces
+    ifup eth1
     apt-get update ; apt-get install -y maven openjdk-7-jdk unzip python-pip
     pip install libyaml
   application-id: root

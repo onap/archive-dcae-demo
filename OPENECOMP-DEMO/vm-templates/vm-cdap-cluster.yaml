@@ -27,6 +27,9 @@ installation-steps:
 
 - step: shell
   command: |
+    echo auto eth1 >> /etc/network/interfaces
+    echo iface eth1 inet dhcp >> /etc/network/interfaces
+    ifup eth1
     apt-get update ; apt-get install -y maven openjdk-7-jdk unzip python-pip
     pip install pyyaml
   application-id: root
